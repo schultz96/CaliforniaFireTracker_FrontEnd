@@ -1,25 +1,24 @@
 import React from 'react';
-import logo from './logo.svg';
+import {
+  BrowserRouter
+} from 'react-router-dom';
 import './App.css';
+import { Menu } from './Components/Menu/Menu';
+import { Router } from './pages/Router';
+import { Grid } from '@material-ui/core';
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Grid container spacing={0}>
+        <Grid item xs={2}>
+          <Menu/>
+        </Grid>
+        <Grid item xs={10}>
+          <Router/>
+        </Grid>
+      </Grid>
+    </BrowserRouter>
   );
 }
 

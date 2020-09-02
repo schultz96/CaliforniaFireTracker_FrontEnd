@@ -1,0 +1,18 @@
+.menu-item-children {
+  display: none;
+}
+
+.menu-item-open {
+  display: block !important;
+  height: auto;
+}
+
+.menu-item-children {
+  padding-left: 20px;
+  height: 0;
+  transition: .25s;
+}
+
+.menu-item h3 {
+  cursor: pointer;
+}
