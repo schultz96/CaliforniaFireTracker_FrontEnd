@@ -6,22 +6,6 @@ export const Weather = (props) => {
 
   const [ query, setQuery ] = useState('chicago');
 
-  // only runs once if the array passed in is empty (if its values are changed it re-runs)
-  // useEffect(() => {
-  //   axios({
-  //     url: 'https://api.openweathermap.org/data/2.5/weather',
-  //     params: {
-  //       q: 'chicago',
-  //       appid: 'd74acdc5b23e10e528515e72aaf7ad70',
-  //       units: 'imperial'
-  //     }
-  //   }).then(res => {
-  //     setWeather(res.data);
-  //   }, err => {
-  //     console.log(err);
-  //   });
-  // }, []); 
-
   // runs on page load once, doesn't re-run on render because the array is empty
   useEffect(() => {
     getWeather();
