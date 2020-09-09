@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { MapInterface } from '../../Components/MapInterface/MapInterface';
 import { Filters } from '../../Components/Filters/Filters.js';
-import { Menu } from '../../Components/Menu/Menu';
+import { AppMenu } from '../../Components/Menu/Menu';
 import { Grid } from '@material-ui/core';
 
 export const Map = () => {
@@ -26,7 +26,7 @@ export const Map = () => {
   return (
     <Grid container style={{ padding: 20 }} spacing={3}>
       <Grid item xs={12} md={12} lg={3} style={{ padding: 20 }}>
-        <Menu />
+        <AppMenu />
         <Filters
           layers={[
             {
@@ -61,8 +61,6 @@ export const Map = () => {
           responseLayerToggle={responseLayerToggle}
         />
       </Grid>
-      
-    </Grid>
-    
+    </Grid> 
   )
 }
