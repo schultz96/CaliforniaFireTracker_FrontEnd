@@ -11,10 +11,10 @@ const App = () => {
   return (
     <BrowserRouter>
       <Grid container spacing={0}>
-        <Grid item xs={2}>
+        <Grid item xs={12}>
           <Menu/>
         </Grid>
-        <Grid item xs={10}>
+        <Grid item xs={12}>
           <Router/>
         </Grid>
       </Grid>

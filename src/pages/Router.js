@@ -3,17 +3,14 @@ import {
   Switch,
   Route
  } from 'react-router-dom';
- import { Dashboard } from './Dashboard/Dashboard';
- import { ManagementRouter } from './Management/Router';
-
+ import { Map } from './Map/Map';
+ import { Grid } from '@material-ui/core';
 
 export const Router = () => (
   <Switch>
     <Route exact path="/">
-      <Dashboard/>
+      <Map/>
     </Route>
-    <Route path="/management">
-      <ManagementRouter/>
-    </Route>
+    
   </Switch>
 )
