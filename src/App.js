@@ -12,9 +12,6 @@ const App = () => {
     <BrowserRouter>
       <Grid container spacing={0}>
         <Grid item xs={12}>
-          <Menu/>
-        </Grid>
-        <Grid item xs={12}>
           <Router/>
         </Grid>
       </Grid>

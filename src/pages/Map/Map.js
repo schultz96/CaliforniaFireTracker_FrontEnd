@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { MapInterface } from '../../Components/MapInterface/MapInterface';
 import { Filters } from '../../Components/Filters/Filters.js';
+import { Menu } from '../../Components/Menu/Menu';
 import { Grid } from '@material-ui/core';
 
 export const Map = () => {
@@ -23,30 +24,37 @@ export const Map = () => {
   }
 
   return (
-    <Grid container style={{ padding: 20 }}>
-      <Grid item xs={2}>
+    <Grid container style={{ padding: 20 }} spacing={3}>
+      <Grid item xs={12} md={12} lg={3} style={{ padding: 20 }}>
+        <Menu />
         <Filters
           layers={[
             {
-              display: 'Active Fires',
+              primary: 'Active Fires',
+              secondary: `Current active wildfires`,
               id: 'fireLayer',
-              checked: fireLayerToggle
+              checked: fireLayerToggle,
+              color: 'red'
             },
             {
-              display: 'Recent Incidents',
+              primary: 'Recent Incidents',
+              secondary: 'Contains all fire-related incidents. Click for specific details such as cause & fuel source',
               id: 'incidentLayer',
-              checked: incidentLayerToggle
+              checked: incidentLayerToggle,
+              color: 'yellow'
             },
             {
-              display: 'Response Zones',
+              primary: 'Response Zones',
+              secondary: 'Visualizes wildfire response events and suppression efforts',
               id: 'responseLayer',
-              checked: responseLayerToggle
+              checked: responseLayerToggle,
+              color: '#00CDCD'
             }
           ]}
           onToggleFilter={handleToggleFilter}
         />
       </Grid>
-      <Grid item xs={10}>
+      <Grid item xs={12} md={12} lg={9}>
         <MapInterface 
           fireLayerToggle={fireLayerToggle}
           incidentLayerToggle={incidentLayerToggle}

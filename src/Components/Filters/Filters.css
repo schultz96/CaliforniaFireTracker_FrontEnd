@@ -1,0 +1,7 @@
+.filter-item:nth-child(odd) {
+  background-color: #2e2e2e;
+}
+
+.filter-item-text p {
+  color: lightgray;
+}

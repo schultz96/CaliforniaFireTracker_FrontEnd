@@ -16,3 +16,12 @@
 .menu-item h3 {
   cursor: pointer;
 }
+
+a {
+  color: inherit;
+  font-size: 20px;
+}
+
+.icon {
+  color: white;
+}

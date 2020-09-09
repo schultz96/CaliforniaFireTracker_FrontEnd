@@ -31,7 +31,7 @@ export const MapInterface = (props) => {
         const fireLabelClass = { // autocasts as new LabelClass()
           symbol: {
             type: "text", // autocasts as new TextSymbol()
-            color: "green",
+            color: "red",
             haloColor: "black",
             haloSize: '2px',
             font: { // autocast as new Font()

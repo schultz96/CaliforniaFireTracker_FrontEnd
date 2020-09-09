@@ -3,23 +3,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-// import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import Checkbox from '@material-ui/core/Checkbox';
-// import IconButton from '@material-ui/core/IconButton';
-// import { Icon } from '@material-ui/core';
-
-
-// const useStyles = makeStyles((theme) => ({
-//   root: {
-//     width: '100%',
-//     maxWidth: 360,
-//     backgroundColor: theme.palette.background.paper,
-//   },
-// }));
+import './Filters.css';
 
 export const Filters = (props) => {
-  // const classes = useStyles();
 
   const { onToggleFilter } = props;
 
@@ -30,9 +18,10 @@ export const Filters = (props) => {
   return (
     <div>
       <h2>Map Filters:</h2>
-      <List>
+      <List className="filters-list">
         {props.layers.map((layer, i) => (
             <ListItem 
+              className="filter-item"
               key={layer.id}
               button
               onClick={(e) => {
@@ -47,9 +36,17 @@ export const Filters = (props) => {
                   tabIndex={-1}
                   disableRipple
                   inputProps={{ 'aria-labelledby': `filter-label-${layer.id}`}}
+                  style={{
+                    color: layer.color || 'white'
+                  }}
                 />
               </ListItemIcon>
-              <ListItemText id={`filter-label-${layer.id}`} primary={layer.display} />
+              <ListItemText 
+                className="filter-item-text"
+                id={`filter-label-${layer.id}`} 
+                primary={layer.primary || 'Unknown layer'} 
+                secondary={layer.secondary || ''}
+              />
 
             </ListItem>
 
