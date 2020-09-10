@@ -1,14 +1,10 @@
 import React, { useState } from 'react';
+import { MainLayout } from '../../Layouts/MainLayout/MainLayout';
 import { MapInterface } from '../../Components/MapInterface/MapInterface';
 import { Filters } from '../../Components/Filters/Filters.js';
-import { AppMenu } from '../../Components/Menu/Menu';
-import { Grid } from '@material-ui/core';
 
 export const Map = () => {
 
-  // const [ fireLayerToggle, toggleFireLayer ] = useState(true);
-  // const [ incidentLayerToggle, toggleIncidentLayer ] = useState(true);
-  // const [ responseLayerToggle, toggleResponseLayer ] = useState(true);
   const [ filterToggles, setToggleFilters ] = useState({
     fireLayer: true,
     incidentLayer: true,
@@ -22,22 +18,11 @@ export const Map = () => {
       ...filterToggles,
       [id]: !filterToggles[id]
     })
-
-    // if (id === 'fireLayer') {
-    //   toggleFireLayer(!fireLayerToggle);
-    // }
-    // if (id === 'incidentLayer') {
-    //   toggleIncidentLayer(!incidentLayerToggle);
-    // }
-    // if (id === 'responseLayer') {
-    //   toggleResponseLayer(!responseLayerToggle);
-    // }
   }
 
   return (
-    <Grid container style={{ padding: 20 }} spacing={3}>
-      <Grid item xs={12} md={12} lg={3} style={{ padding: 20 }}>
-        <AppMenu />
+    <MainLayout
+      sidebar={
         <Filters
           layers={[
             {
@@ -64,15 +49,11 @@ export const Map = () => {
           ]}
           onToggleFilter={handleToggleFilter}
         />
-      </Grid>
-      <Grid item xs={12} md={12} lg={9}>
-        <MapInterface 
-          filterToggles={filterToggles}
-          // fireLayerToggle={fireLayerToggle}
-          // incidentLayerToggle={incidentLayerToggle}
-          // responseLayerToggle={responseLayerToggle}
-        />
-      </Grid>
-    </Grid> 
+      }
+    >
+      <MapInterface 
+        filterToggles={filterToggles}
+      />
+    </MainLayout>
   )
 }

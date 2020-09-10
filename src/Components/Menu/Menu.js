@@ -10,6 +10,7 @@ import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuIcon from '@material-ui/icons/Menu';
+import { Link } from 'react-router-dom';
 import './Menu.css';
 import Logo from './logo.png';
 
@@ -65,13 +66,17 @@ export const AppMenu = () => {
               <MapIcon 
                 className="menu-icon"
               />
-              Dashboard
+              <Link to='/'>
+                Dashboard
+              </Link>
             </MenuItem>
             <MenuItem onClick={handleClose}>
               <ReceiptIcon 
                 className="menu-icon"
               />
-              Sources
+              <Link to='/sources'>
+                Sources
+              </Link>
             </MenuItem>
           </Menu>
         </div>
