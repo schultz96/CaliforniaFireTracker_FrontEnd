@@ -6,21 +6,32 @@ import { Grid } from '@material-ui/core';
 
 export const Map = () => {
 
-  const [ fireLayerToggle, toggleFireLayer ] = useState(true);
-  const [ incidentLayerToggle, toggleIncidentLayer ] = useState(true);
-  const [ responseLayerToggle, toggleResponseLayer ] = useState(true);
+  // const [ fireLayerToggle, toggleFireLayer ] = useState(true);
+  // const [ incidentLayerToggle, toggleIncidentLayer ] = useState(true);
+  // const [ responseLayerToggle, toggleResponseLayer ] = useState(true);
+  const [ filterToggles, setToggleFilters ] = useState({
+    fireLayer: true,
+    incidentLayer: true,
+    responseLayer: true,
+  });
 
   const handleToggleFilter = (id) => {
     console.log(id)
-    if (id === 'fireLayer') {
-      toggleFireLayer(!fireLayerToggle);
-    }
-    if (id === 'incidentLayer') {
-      toggleIncidentLayer(!incidentLayerToggle);
-    }
-    if (id === 'responseLayer') {
-      toggleResponseLayer(!responseLayerToggle);
-    }
+
+    setToggleFilters({
+      ...filterToggles,
+      [id]: !filterToggles[id]
+    })
+
+    // if (id === 'fireLayer') {
+    //   toggleFireLayer(!fireLayerToggle);
+    // }
+    // if (id === 'incidentLayer') {
+    //   toggleIncidentLayer(!incidentLayerToggle);
+    // }
+    // if (id === 'responseLayer') {
+    //   toggleResponseLayer(!responseLayerToggle);
+    // }
   }
 
   return (
@@ -33,21 +44,21 @@ export const Map = () => {
               primary: 'Active Fires',
               secondary: `Current active wildfires`,
               id: 'fireLayer',
-              checked: fireLayerToggle,
+              checked: filterToggles.fireLayer,
               color: 'red'
             },
             {
               primary: 'Recent Incidents',
               secondary: 'Contains all fire-related incidents. Click for specific details such as cause & fuel source',
               id: 'incidentLayer',
-              checked: incidentLayerToggle,
+              checked: filterToggles.incidentLayer,
               color: 'yellow'
             },
             {
               primary: 'Response Zones',
               secondary: 'Visualizes wildfire response events and suppression efforts',
               id: 'responseLayer',
-              checked: responseLayerToggle,
+              checked: filterToggles.responseLayer,
               color: '#00CDCD'
             }
           ]}
@@ -56,9 +67,10 @@ export const Map = () => {
       </Grid>
       <Grid item xs={12} md={12} lg={9}>
         <MapInterface 
-          fireLayerToggle={fireLayerToggle}
-          incidentLayerToggle={incidentLayerToggle}
-          responseLayerToggle={responseLayerToggle}
+          filterToggles={filterToggles}
+          // fireLayerToggle={fireLayerToggle}
+          // incidentLayerToggle={incidentLayerToggle}
+          // responseLayerToggle={responseLayerToggle}
         />
       </Grid>
     </Grid> 
