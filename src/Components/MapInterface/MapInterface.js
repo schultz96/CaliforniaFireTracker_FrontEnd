@@ -116,7 +116,8 @@ export const MapInterface = (props) => {
         // Responding locations
         if (!responseLayer) {
           responseLayer = new FeatureLayer({
-            url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/Wildfire/FeatureServer/2",
+            // https://sampleserver6.arcgisonline.com/arcgis/rest/services/Wildfire/FeatureServer/2
+            url: "data/response.geojson",
             id: 'responseLayer',
             opacity: 0.4,
           });
