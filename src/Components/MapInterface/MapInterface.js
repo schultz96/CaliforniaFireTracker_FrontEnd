@@ -2,10 +2,12 @@ import React, { useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import { loadModules } from 'esri-loader';
 import './MapInterface.css';
+import { GraphicEqSharp } from '@material-ui/icons';
 
 let fireLayer;
 let incidentLayer;
 let responseLayer;
+let hazardLayer;
 
 export const MapInterface = (props) => {
   const mapRef = useRef();
@@ -14,16 +16,16 @@ export const MapInterface = (props) => {
   if (fireLayer) fireLayer.visible = props.filterToggles.fireLayer;
   if (incidentLayer) incidentLayer.visible = props.filterToggles.incidentLayer;
   if (responseLayer) responseLayer.visible = props.filterToggles.responseLayer;
+  if (hazardLayer) hazardLayer.visible = props.filterToggles.hazardLayer;
 
   useEffect(
     () => {
       // lazy load the required ArcGIS API for JavaScript modules and CSS
-      loadModules(['esri/Map', 'esri/views/MapView', "esri/layers/GeoJSONLayer", "esri/layers/FeatureLayer"], { css: true })
-      .then(([ArcGISMap, MapView, GeoJSONLayer, FeatureLayer]) => {
+      loadModules(['esri/Map', 'esri/views/MapView', "esri/layers/GeoJSONLayer", "esri/layers/FeatureLayer", "esri/PopupTemplate"], { css: true })
+      .then(([ArcGISMap, MapView, GeoJSONLayer, FeatureLayer, PopupTemplate]) => {
 
         if (!fireLayer) {
           fireLayer = new GeoJSONLayer({
-            // url: "https://opendata.arcgis.com/datasets/5da472c6d27b4b67970acc7b5044c862_0.geojson"
             url: "data/wildfire.geojson",
             id: 'fireLayer',
             opacity: 0.55,
@@ -76,7 +78,6 @@ export const MapInterface = (props) => {
         */
         if (!incidentLayer) {
           incidentLayer = new GeoJSONLayer({
-            // url: "https://opendata.arcgis.com/datasets/68637d248eb24d0d853342cba02d4af7_0.geojson"
             url: "data/incidents.geojson", // locally stored instead
             id: 'incidentLayer',
             renderer: {
@@ -105,28 +106,63 @@ export const MapInterface = (props) => {
                 weight: "bold"
               },
             },
-            minScale: 300000,
+            minScale: 1, //300000
             // labelPlacement: "above-center",
             labelExpressionInfo: {
-              expression: "$feature.IncidentName"
+              expression: `
+                $feature.IncidentName + TextFormatting.NewLine + 
+                $feature.IncidentShortDescription + TextFormatting.NewLine +
+                $feature.DailyAcres + TextFormatting.NewLine +
+                $feature.FireCause + TextFormatting.NewLine +
+                $feature.FireCauseSpecific + TextFormatting.NewLine +
+                $feature.FireBehaviorGeneral1 + TextFormatting.NewLine +
+                $feature.FireBehaviorGeneral2 + TextFormatting.NewLine +
+                $feature.FireBehaviorGeneral3 + TextFormatting.NewLine +
+                $feature.FireBehaviorGeneral4 + TextFormatting.NewLine +
+                $feature.PredominantFuelGroup + TextFormatting.NewLine +
+                $feature.PredominantFuelModel + TextFormatting.NewLine +
+                $feature.ModifiedOnDateTime
+              `
             }
           }];
         }
         
         // Responding locations
         if (!responseLayer) {
-          responseLayer = new FeatureLayer({
-            // https://sampleserver6.arcgisonline.com/arcgis/rest/services/Wildfire/FeatureServer/2
+          responseLayer = new GeoJSONLayer({
             url: "data/response.geojson",
             id: 'responseLayer',
             opacity: 0.4,
+            renderer: {
+              type: "simple",
+              symbol: {
+                type: "simple-fill",
+                color: "teal"
+              }
+            }
           });
+        }
+
+        // hazardous zones with high likelyhood of fire
+        if (!hazardLayer) {
+          hazardLayer = new GeoJSONLayer({
+            url: 'data/hazard-areas.geojson',
+            id: 'hazardLayer',
+            opacity: 0.4,
+            renderer: {
+              type: "simple",
+              symbol: {
+                type: "simple-fill",
+                color: "orange"
+              }
+            }
+          })
         }
         
 
         const map = new ArcGISMap({
           basemap: 'topo-vector',
-          layers: [fireLayer, incidentLayer, responseLayer]
+          layers: [fireLayer, incidentLayer, responseLayer, hazardLayer]
         });
 
         // load the map view at the ref's DOM node
@@ -134,11 +170,68 @@ export const MapInterface = (props) => {
           container: mapRef.current,
           map: map,
           center: [-118, 34],
-          zoom: 8
+          zoom: 8,
+          popup: {
+            actions: [],
+            dockEnabled: true,
+            dockOptions: {
+              buttonEnabled: true,
+              breakpoint: false,
+            },
+            collapseEnabled: false
+          }
         }); 
 
-        
-        
+        // Listen for when the scene view is ready
+        view.when(function () {
+          // It's necessary to overwrite the default click for the popup
+          // behavior in order to display your own popup
+          view.popup.autoOpenEnabled = false;
+        });
+
+
+        // Get the screen point from the view's click event
+        view.on("click", function (event) {
+          var screenPoint = {
+            x: event.x,
+            y: event.y
+          };
+
+          // Search for graphics at the clicked location
+          view.hitTest(screenPoint).then(function (response) {
+            if (response.results.length) {
+              // console.log(response.results)
+              var result = response.results.find(result => result.graphic.layer === incidentLayer);
+
+              if (result) {
+                let graphic = result.graphic;
+                console.log(graphic.attributes);
+                let modifiedDate = new Date(graphic.attributes.ModifiedOnDateTime).toISOString().slice(0, 19).replace(/-/g, "/").replace("T", " ")
+
+                view.popup.open({
+                  // Set the popup's title to the coordinates of the location
+                  title: `Incident: ${graphic.attributes.IncidentName || ''}`,
+                  content: `
+                    Description: ${graphic.attributes.IncidentShortDescription || ''} <br>
+                    Daily Acres Burned: ${graphic.attributes.DailyAcres || ''} <br>
+                    Fire General Cause: ${graphic.attributes.FireCause || ''} <br>
+                    Fire Specific Cause: ${graphic.attributes.FireCauseSpecific || ''} <br>
+                    Fire Behavior: 
+                    ${graphic.attributes.FireBehaviorGeneral1 ? graphic.attributes.FireBehaviorGeneral1 : ''}
+                    ${graphic.attributes.FireBehaviorGeneral2 ? ', ' + graphic.attributes.FireBehaviorGeneral2 : ''}
+                    ${graphic.attributes.FireBehaviorGeneral3 ? ', ' + graphic.attributes.FireBehaviorGeneral3 : ''}
+                    ${graphic.attributes.FireBehaviorGeneral4 ? ', ' + graphic.attributes.FireBehaviorGeneral4 : ''} 
+                    <br>
+                    PredominantFuelGroup: ${graphic.attributes.PredominantFuelGroup || ''} <br>
+                    PredominantFuelModel: ${graphic.attributes.PredominantFuelModel || ''} <br>
+                    Last Modified: ${modifiedDate || ''}
+                  `
+                });
+              } 
+            }
+          });
+        });
+
 
         return () => {
           if (view) {

@@ -17,10 +17,14 @@
   cursor: pointer;
 }
 
+.menu-icon {
+  padding-right: 15px;
+}
+
 a {
   color: inherit;
   font-size: 20px;
-  text-decoration: none;
+  text-decoration: none !important;
 }
 
 .icon {

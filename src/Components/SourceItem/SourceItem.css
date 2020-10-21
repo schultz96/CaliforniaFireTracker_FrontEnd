@@ -1,0 +1,17 @@
+.source-item {
+    border: 5px solid lightgray;
+    border-radius: 5px;
+    padding: 20px;
+    margin: 20px;
+    background-color: #2e2e2e;
+}
+
+.source-title {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.source-organization {
+    margin-top: 5px;
+    margin-bottom: 0px;
+}

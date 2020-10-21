@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { MainLayout } from '../../Layouts/MainLayout/MainLayout';
 import { MapInterface } from '../../Components/MapInterface/MapInterface';
 import { Filters } from '../../Components/Filters/Filters.js';
+import { MapInformation } from '../../Components/MapInformation/MapInformation';
 
 export const Map = () => {
 
@@ -9,6 +10,7 @@ export const Map = () => {
     fireLayer: true,
     incidentLayer: true,
     responseLayer: true,
+    hazardLayer: true
   });
 
   const handleToggleFilter = (id) => {
@@ -45,6 +47,13 @@ export const Map = () => {
               id: 'responseLayer',
               checked: filterToggles.responseLayer,
               color: '#00CDCD'
+            },
+            {
+              primary: 'Fire Hazard Severity Zone',
+              secondary: 'Zones with varying degrees of fire hazard based on factors such as fuel, slope, and fire weather.',
+              id: 'hazardLayer',
+              checked: filterToggles.hazardLayer,
+              color: 'orange'
             }
           ]}
           onToggleFilter={handleToggleFilter}
@@ -54,6 +63,7 @@ export const Map = () => {
       <MapInterface 
         filterToggles={filterToggles}
       />
+      <MapInformation/>
     </MainLayout>
   )
 }

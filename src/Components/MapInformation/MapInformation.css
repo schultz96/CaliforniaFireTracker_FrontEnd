@@ -1,0 +1,33 @@
+a {
+    font-size: 16px;
+    text-decoration: underline;
+}
+
+h4 {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.accordion {
+    background-color: #021324 !important;
+    color: #f8f8ff !important;
+    margin-bottom: 10px;
+}
+
+.expand-icon {
+    color: #f8f8ff;
+}
+
+@media only screen and (min-width: 800px) {
+    h4 {
+        margin-left: 15px;
+    }
+
+    p, ul {
+        margin-left: 30px;
+    }
+
+    .accordion-container {
+        padding-left: 30px;
+    }
+  }
