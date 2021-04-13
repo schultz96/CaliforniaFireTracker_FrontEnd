@@ -9,7 +9,7 @@ import './MapInformation.css';
 export const MapInformation = () => {
 
     return (
-        <div>
+        <div className="map-information-container">
             <h2>Map Information</h2>
             <p>All layers are updated every 4th hour (12:00am, 4:00am, 8:00am...) PST time.</p>
             <Divider/>

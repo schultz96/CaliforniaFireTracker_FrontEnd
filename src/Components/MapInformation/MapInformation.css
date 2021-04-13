@@ -19,15 +19,15 @@ h4 {
 }
 
 @media only screen and (min-width: 800px) {
-    h4 {
+    .map-information-container h4 {
         margin-left: 15px;
     }
 
-    p, ul {
+    .map-information-container p, ul {
         margin-left: 30px;
     }
 
-    .accordion-container {
+    .map-information-container .accordion-container {
         padding-left: 30px;
     }
   }

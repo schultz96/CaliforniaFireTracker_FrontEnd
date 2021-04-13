@@ -21,8 +21,8 @@ export const MapInterface = (props) => {
   useEffect(
     () => {
       // lazy load the required ArcGIS API for JavaScript modules and CSS
-      loadModules(['esri/Map', 'esri/views/MapView', "esri/layers/GeoJSONLayer", "esri/layers/FeatureLayer", "esri/PopupTemplate"], { css: true })
-      .then(([ArcGISMap, MapView, GeoJSONLayer, FeatureLayer, PopupTemplate]) => {
+      loadModules(['esri/Map', 'esri/views/MapView', "esri/layers/GeoJSONLayer", "esri/layers/FeatureLayer"], { css: true })
+      .then(([ArcGISMap, MapView, GeoJSONLayer, FeatureLayer]) => {
 
         if (!fireLayer) {
           fireLayer = new GeoJSONLayer({
@@ -52,7 +52,7 @@ export const MapInterface = (props) => {
             },
             // labelPlacement: "above-center",
             labelExpressionInfo: {
-              expression: "$feature.IncidentName"
+              expression: `$feature.IncidentName`
             }
           }];
         }
@@ -109,6 +109,7 @@ export const MapInterface = (props) => {
             minScale: 1, //300000
             // labelPlacement: "above-center",
             labelExpressionInfo: {
+              // this is only here temporarily until i can figure out why these properties won't appear in the details box unless they're in this labelExpressionInfo object
               expression: `
                 $feature.IncidentName + TextFormatting.NewLine + 
                 $feature.IncidentShortDescription + TextFormatting.NewLine +
@@ -201,10 +202,27 @@ export const MapInterface = (props) => {
           view.hitTest(screenPoint).then(function (response) {
             if (response.results.length) {
               // console.log(response.results)
-              var result = response.results.find(result => result.graphic.layer === incidentLayer);
+              var fireLayerResult = response.results.find(fireLayerResult => fireLayerResult.graphic.layer === fireLayer);
+              var incidentLayerResult = response.results.find(incidentLayerResult => incidentLayerResult.graphic.layer === incidentLayer);
 
-              if (result) {
-                let graphic = result.graphic;
+              if (fireLayerResult) {
+                let graphic = fireLayerResult.graphic;
+                console.log(graphic.attributes);
+                // let modifiedDate = new Date(graphic.attributes.CreateDate).toISOString().slice(0, 19).replace(/-/g, "/").replace("T", " ")
+
+                view.popup.open({
+                  // Set the popup's title to the coordinates of the location
+                  title: `Fire Name: ${graphic.attributes.IncidentName || ''}`,
+                  content: `
+                    Description: ${graphic.attributes.IncidentShortDescription || ''} <br>
+                    Daily Acres Burned: ${graphic.attributes.DailyAcres || ''} <br>
+                    Last Modified: ${graphic.attributes.CreateDate || ''}
+                  `
+                });
+              };
+
+              if (incidentLayerResult) {
+                let graphic = incidentLayerResult.graphic;
                 console.log(graphic.attributes);
                 let modifiedDate = new Date(graphic.attributes.ModifiedOnDateTime).toISOString().slice(0, 19).replace(/-/g, "/").replace("T", " ")
 
@@ -227,7 +245,7 @@ export const MapInterface = (props) => {
                     Last Modified: ${modifiedDate || ''}
                   `
                 });
-              } 
+              };
             }
           });
         });

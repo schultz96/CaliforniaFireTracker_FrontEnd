@@ -58,22 +58,22 @@ export const AppMenu = () => {
               horizontal: 'center',
             }}
           >
-            <MenuItem onClick={handleClose}>
-              <MapIcon 
-                className="menu-icon"
-              />
-              <Link to='/'>
-                Map
-              </Link>
-            </MenuItem>
-            <MenuItem onClick={handleClose}>
-              <ReceiptIcon 
-                className="menu-icon"
-              />
-              <Link to='/sources'>
-                Sources
-              </Link>
-            </MenuItem>
+            <Link to='/'>
+              <MenuItem onClick={handleClose}>
+                  <MapIcon 
+                    className="menu-icon"
+                  />
+                  Map
+              </MenuItem>
+            </Link>
+            <Link to='/sources'>
+              <MenuItem onClick={handleClose}>
+                  <ReceiptIcon 
+                    className="menu-icon"
+                  />
+                  Sources
+              </MenuItem>
+            </Link>
           </Menu>
         </div>
       </div>

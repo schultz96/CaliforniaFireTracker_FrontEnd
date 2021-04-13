@@ -5,3 +5,9 @@
 .content-container {
     padding: 40px;
 }
+
+@media only screen and (min-width: 800px) {
+    .sidebar-container {
+        border-right: 1px solid gray;
+    }
+  }
