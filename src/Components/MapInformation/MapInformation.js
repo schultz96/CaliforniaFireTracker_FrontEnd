@@ -11,7 +11,7 @@ export const MapInformation = () => {
     return (
         <div className="map-information-container">
             <h2>Map Information</h2>
-            <p>All layers are updated every 4th hour (12:00am, 4:00am, 8:00am...) PST time.</p>
+            <p>All layers are updated every 4th hour (12:00am, 4:00am, 8:00am...) PST time. The fire layer shows all fires in the past year and current ones provided by https://www.fire.ca.gov/</p>
             <Divider/>
             <h2>Detailed layer information</h2>
             <div className="accordion-container">
@@ -23,7 +23,7 @@ export const MapInformation = () => {
                         <h4>Active Fires</h4>
                     </AccordionSummary>
                     <AccordionDetails>
-                        <p>Displays active wildfire perimeters established and made public by the National Interagency Fire Center.</p>
+                        <p>Displays active & past wildfire perimeters established and made public by the National Interagency Fire Center.</p>
                     </AccordionDetails>
                 </Accordion>
                 <Accordion className="accordion">
@@ -73,7 +73,7 @@ export const MapInformation = () => {
                     </AccordionDetails>
                 </Accordion>
             </div>
-            
+
         </div>
-    )   
+    )
 }

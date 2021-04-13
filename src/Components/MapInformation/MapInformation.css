@@ -17,17 +17,3 @@ h4 {
 .expand-icon {
     color: #f8f8ff;
 }
-
-@media only screen and (min-width: 800px) {
-    .map-information-container h4 {
-        margin-left: 15px;
-    }
-
-    .map-information-container p, ul {
-        margin-left: 30px;
-    }
-
-    .map-information-container .accordion-container {
-        padding-left: 30px;
-    }
-  }

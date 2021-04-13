@@ -9,9 +9,8 @@ export const Footer = () => {
         <Grid item xs={12} className="footer-container">
             <img src={Logo2} width='100' height='150' alt="CA Fire Tracker"/>
             <h2>California Fire Tracker</h2>
-            <p>Created by Kenny Schultz</p>
-            <p>View more of my work on my website below</p>
-            <p>www.kennyschultz.com</p>
+            <p>Created by Kenny Schultz during and near the 2020 Eldorado Fire in Southern California</p>
+            <p>View more of my work at <a href="https://www.kennyschultz.com" target="_blank">kennyschultz.com</a></p>
         </Grid>
     )
 }
