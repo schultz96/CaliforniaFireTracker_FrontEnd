@@ -10,10 +10,6 @@ import { Link } from 'react-router-dom';
 import './Menu.css';
 import Logo from './cfa-logo.png';
 
-function ListItemLink(props) {
-  return <ListItem button component="a" {...props} />;
-}
-
 export const AppMenu = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -23,20 +19,20 @@ export const AppMenu = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  
+
   return (
     <div>
       <div>
         <div style={{position: 'relative', width: '100%', height: '100px'}}>
           <img src={Logo} height={125} width={325} style={{position : 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)'}}/>
         </div>
-        <div style={{textAlign: 'center', paddingTop: 25}}>
-          {/* <h1>California Fire Tracker</h1> */}
-        </div>
+        {/*<div style={{textAlign: 'center', paddingTop: 25}}>*/}
+        {/*  /!* <h1>California Fire Tracker</h1> *!/*/}
+        {/*</div>*/}
         <div>
           <div style={{textAlign: 'center'}}>
             <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-              <MenuIcon 
+              <MenuIcon
                 className="icon"
                 fontSize="large"
               />
@@ -60,7 +56,7 @@ export const AppMenu = () => {
           >
             <Link to='/'>
               <MenuItem onClick={handleClose}>
-                  <MapIcon 
+                  <MapIcon
                     className="menu-icon"
                   />
                   Map
@@ -68,7 +64,7 @@ export const AppMenu = () => {
             </Link>
             <Link to='/sources'>
               <MenuItem onClick={handleClose}>
-                  <ReceiptIcon 
+                  <ReceiptIcon
                     className="menu-icon"
                   />
                   Sources
@@ -77,6 +73,6 @@ export const AppMenu = () => {
           </Menu>
         </div>
       </div>
-    </div> 
+    </div>
   )
 }

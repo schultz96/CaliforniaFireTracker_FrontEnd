@@ -1,8 +1,6 @@
 import React, { useEffect, useRef } from 'react';
-import ReactDOM from 'react-dom';
 import { loadModules } from 'esri-loader';
 import './MapInterface.css';
-import { GraphicEqSharp } from '@material-ui/icons';
 
 let fireLayer;
 let incidentLayer;
@@ -60,19 +58,19 @@ export const MapInterface = (props) => {
         /*
           INCIDENTS
           ---------------------------------
-          Useful info in layer: 
+          Useful info in layer:
           - properties."DailyAcres": 11.1
           - properties."DiscoveryAcres": 0.1
           - properties."FireCause": "Human"
           - properties."FireCauseGeneral": "Utilities"
           - properties."FireCauseSpecific": "Power Generation/Transmission"
-          - properties."ModifiedOnDateTime": 1590524946247.0 
+          - properties."ModifiedOnDateTime": 1590524946247.0
               - In Epoch time format: https://www.epochconverter.com/
           - properties."POOCounty": "San Bernardino"
           - properties."FireBehaviorGeneral"
               - FireBehaviorGeneral1 2 3 and 4
-          - properties."PredominantFuelGroup": "Grass-Shrub"  
-          - properties."PredominantFuelModel": "GS2" 
+          - properties."PredominantFuelGroup": "Grass-Shrub"
+          - properties."PredominantFuelModel": "GS2"
               - Codes for Fuel Models found here: https://www.fs.fed.us/rm/pubs/rmrs_gtr153.pdf
               - It would be good to add a description to these codes somewhere for context
         */
@@ -93,7 +91,7 @@ export const MapInterface = (props) => {
               }
             },
           });
-          
+
           incidentLayer.labelingInfo = [{ // autocasts as new LabelClass()
             symbol: {
               type: "text", // autocasts as new TextSymbol()
@@ -127,7 +125,7 @@ export const MapInterface = (props) => {
             }
           }];
         }
-        
+
         // Responding locations
         if (!responseLayer) {
           responseLayer = new GeoJSONLayer({
@@ -159,7 +157,7 @@ export const MapInterface = (props) => {
             }
           })
         }
-        
+
 
         const map = new ArcGISMap({
           basemap: 'topo-vector',
@@ -181,7 +179,7 @@ export const MapInterface = (props) => {
             },
             collapseEnabled: false
           }
-        }); 
+        });
 
         // Listen for when the scene view is ready
         view.when(function () {
@@ -245,7 +243,7 @@ export const MapInterface = (props) => {
                     Last Modified: ${modifiedDate || ''}
                   `
                 });
-              };
+              }
             }
           });
         });

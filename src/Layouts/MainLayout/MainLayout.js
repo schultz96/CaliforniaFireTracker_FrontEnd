@@ -4,7 +4,6 @@ import { Grid } from '@material-ui/core';
 import { Footer } from '../../Components/Footer/Footer';
 import './MainLayout.css';
 
-
 export const MainLayout = (props) => {
 
   return (

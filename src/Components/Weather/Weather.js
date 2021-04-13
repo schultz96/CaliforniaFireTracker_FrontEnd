@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+// This is just a test file to see how webscraping and querying web resources works
 export const Weather = (props) => {
   const [ weather, setWeather ] = useState({});
 
@@ -34,7 +35,7 @@ export const Weather = (props) => {
   return (
     <div>
       <p>The weather is: {weather.main ? weather.main.temp : 0}</p>
-      <input 
+      <input
         placeholder="weather"
         value={query}
         onChange={queryChanged}
