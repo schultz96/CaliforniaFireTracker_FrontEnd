@@ -28,8 +28,8 @@ export const Map = () => {
         <Filters
           layers={[
             {
-              primary: 'Active Fires',
-              secondary: `Current active wildfires`,
+              primary: 'WildFires',
+              secondary: `Wildfires in the past year`,
               id: 'fireLayer',
               checked: filterToggles.fireLayer,
               color: 'red'
@@ -60,7 +60,7 @@ export const Map = () => {
         />
       }
     >
-      <MapInterface 
+      <MapInterface
         filterToggles={filterToggles}
       />
       <MapInformation/>
